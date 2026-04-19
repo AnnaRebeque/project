@@ -1,0 +1,10 @@
+# Ignorar arquivos de configuração com senhas
+conexao.php
+
+# Ignorar arquivos de sistema operacional
+.DS_Store
+Thumbs.db
+ 
+
+.vscode/
+.idea/
