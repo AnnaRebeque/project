@@ -1,0 +1,21 @@
+name: CD - Deploy Simulado
+
+on:
+  pull_request:
+    branches: [ "main" ]
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: Baixando o codigo
+      uses: actions/checkout@v3
+
+    - name: Simulando Entrega no Servidor
+      run: |
+        echo "Iniciando o deploy do sistema de login..."
+        echo "Checando credenciais..."
+        echo "Copiando arquivos PHP para a pasta public_html..."
+        sleep 2
+        echo "Deploy finalizado com sucesso!"
