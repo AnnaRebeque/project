@@ -1,0 +1,24 @@
+name: Testes Unitários PHP
+
+on:
+  pull_request:
+
+jobs:
+  testar:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Baixar o código
+        uses: actions/checkout@v3
+
+      - name: Configurar PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: '8.2'
+
+      - name: Instalar PHPUnit
+        run: |
+          wget -O phpunit https://phar.phpunit.de/phpunit-10.phar
+          chmod +x phpunit
+
+      - name: Rodar os 5 testes unitários
+        run: ./phpunit tests/ValidadorTest.php
