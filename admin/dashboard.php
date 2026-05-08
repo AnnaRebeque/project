@@ -9,6 +9,14 @@ require_once '../conexao.php'; // Usa '..' para voltar uma pasta e achar a conex
 // Busca todos os produtos para listar
 $stmt = $pdo->query("SELECT * FROM produtos ORDER BY id DESC");
 $produtos = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+// Busca configurações atuais para preencher o formulário
+$stmt_config = $pdo->query("SELECT * FROM configuracoes WHERE id = 1");
+$config = $stmt_config->fetch(PDO::FETCH_ASSOC);
+
+// Busca as imagens do carrossel
+$stmt_carrossel = $pdo->query("SELECT * FROM carrossel ORDER BY id DESC");
+$imagens_carrossel = $stmt_carrossel->fetchAll(PDO::FETCH_ASSOC);
 ?>
 
 <!DOCTYPE html>
@@ -27,35 +35,41 @@ $produtos = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
         <div class="bg-white p-6 rounded-lg shadow-lg mb-8">
     <h2 class="text-2xl font-bold mb-4">Adicionar Novo Produto</h2>
-    <form action="processa_produto.php" method="POST" enctype="multipart/form-data">
-        <input type="hidden" name="acao" value="adicionar">
-        
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
-            <div>
-                <label class="block text-gray-700 text-sm font-bold mb-2">Nome do Produto</label>
-                <input type="text" name="nome" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700" required>
+        <form action="processa_produto.php" method="POST" enctype="multipart/form-data">
+            <input type="hidden" name="acao" value="adicionar">
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
+                <div>
+                    <label class="block text-gray-700 text-sm font-bold mb-2">Nome do Produto</label>
+                    <input type="text" name="nome" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700" required>
+                </div>
+                <div>
+                    <label class="block text-gray-700 text-sm font-bold mb-2">Preço (ex: 25.50)</label>
+                    <input type="text" name="preco" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700" required>
+                </div>
             </div>
-            <div>
-                <label class="block text-gray-700 text-sm font-bold mb-2">Preço (ex: 25.50)</label>
-                <input type="text" name="preco" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700" required>
+            
+            <div class="mb-4">
+                <label class="block text-gray-700 text-sm font-bold mb-2">Descrição</label>
+                <textarea name="descricao" rows="3" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700" required></textarea>
             </div>
-        </div>
-        
-        <div class="mb-4">
-            <label class="block text-gray-700 text-sm font-bold mb-2">Descrição</label>
-            <textarea name="descricao" rows="3" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700" required></textarea>
-        </div>
-        
-        <div class="mb-4">
-            <label class="block text-gray-700 text-sm font-bold mb-2">Imagem do Produto</label>
-            <input type="file" name="imagem" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700" required>
-        </div>
-        
-        <button type="submit" class="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded">
-            Adicionar Produto
-        </button>
-    </form>
-</div>
+            
+            <div class="mb-4">
+                <label class="block text-gray-700 text-sm font-bold mb-2">Imagem do Produto</label>
+                <input type="file" name="imagem" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700" required>
+            </div>
+
+            <div class="mb-4">
+                <label class="block text-gray-700 text-sm font-bold mb-2">Fotos Extras (Galeria do Modal)</label>
+                <input type="file" name="fotos_extras[]" multiple accept="image/*" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700">
+                <p class="text-sm text-gray-500 mt-1">Você pode selecionar várias fotos segurando o botão Ctrl.</p>
+            </div>
+            
+            <button type="submit" class="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded">
+                Adicionar Produto
+            </button>
+        </form>
+    </div>
 
         <div class="bg-white p-6 rounded-lg shadow-lg">
             <h2 class="text-2xl font-bold mb-4">Produtos Cadastrados</h2>
@@ -80,6 +94,78 @@ $produtos = $stmt->fetchAll(PDO::FETCH_ASSOC);
                     <?php endforeach; ?>
                 </tbody>
             </table>
+        </div>
+    </div>
+
+    <div class="bg-white p-6 rounded-lg shadow-lg mb-8">
+            <h2 class="text-2xl font-bold mb-4">Configurações do Layout do Site</h2>
+            <form action="processa_configuracoes.php" method="POST" enctype="multipart/form-data">
+                
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
+                    <div>
+                        <label class="block text-gray-700 text-sm font-bold mb-2">Título Principal (Hero)</label>
+                        <input type="text" name="hero_titulo" value="<?php echo htmlspecialchars($config['hero_titulo']); ?>" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700" required>
+                    </div>
+                    <div>
+                        <label class="block text-gray-700 text-sm font-bold mb-2">Subtítulo (Hero)</label>
+                        <input type="text" name="hero_subtitulo" value="<?php echo htmlspecialchars($config['hero_subtitulo']); ?>" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700" required>
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-4">
+                    <div>
+                        <label class="block text-gray-700 text-sm font-bold mb-2">Cor Fundo Produtos</label>
+                        <input type="color" name="cor_produtos" value="<?php echo $config['cor_produtos']; ?>" class="w-full h-10 border rounded cursor-pointer">
+                    </div>
+                    <div>
+                        <label class="block text-gray-700 text-sm font-bold mb-2">Cor Fundo Contato</label>
+                        <input type="color" name="cor_contato" value="<?php echo $config['cor_contato']; ?>" class="w-full h-10 border rounded cursor-pointer">
+                    </div>
+                    <div>
+                        <label class="block text-gray-700 text-sm font-bold mb-2">Cor do Rodapé</label>
+                        <input type="color" name="cor_rodape" value="<?php echo $config['cor_rodape']; ?>" class="w-full h-10 border rounded cursor-pointer">
+                    </div>
+                </div>
+
+                <div class="mb-4">
+                    <label class="block text-gray-700 text-sm font-bold mb-2">Imagem de Fundo (Deixe em branco para manter a atual)</label>
+                    <input type="file" name="hero_imagem" accept="image/*" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700">
+                    <p class="text-sm text-gray-500 mt-1">Imagem atual: <?php echo $config['hero_imagem']; ?></p>
+                </div>
+                
+                <button type="submit" class="bg-purple-600 hover:bg-purple-800 text-white font-bold py-2 px-4 rounded">
+                    Salvar Layout
+                </button>
+            </form>
+        </div>
+        <div class="bg-white p-6 rounded-lg shadow-lg mb-8">
+        <div class="flex justify-between items-center mb-4">
+            <h2 class="text-2xl font-bold">Imagens do Carrossel</h2>
+        </div>
+
+        <form action="processa_carrossel.php" method="POST" enctype="multipart/form-data" class="mb-6 flex gap-4 items-end">
+            <input type="hidden" name="acao" value="adicionar">
+            <div class="flex-grow">
+                <label class="block text-gray-700 text-sm font-bold mb-2">Adicionar Nova Imagem</label>
+                <input type="file" name="imagem" accept="image/*" required class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700">
+            </div>
+            <button type="submit" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-6 rounded h-10">
+                Fazer Upload
+            </button>
+        </form>
+
+        <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+            <?php foreach ($imagens_carrossel as $img): ?>
+                <div class="border rounded p-2 relative group">
+                    <img src="../assets/images/carrossel/<?php echo $img['imagem']; ?>" class="w-full h-32 object-cover rounded">
+                    
+                    <a href="processa_carrossel.php?acao=excluir&id=<?php echo $img['id']; ?>&arquivo=<?php echo $img['imagem']; ?>" 
+                    onclick="return confirm('Excluir esta imagem do carrossel?')"
+                    class="absolute top-4 right-4 bg-red-500 text-white p-2 rounded-full shadow-lg hover:bg-red-700">
+                        🗑️
+                    </a>
+                </div>
+            <?php endforeach; ?>
         </div>
     </div>
 </body>
