@@ -50,8 +50,13 @@ if (!$produto) {
                 </div>
 
                 <div class="mb-4">
-                    <label class="block text-gray-700 font-bold mb-2">Descrição</label>
-                    <textarea name="descricao" rows="4" class="w-full border rounded py-2 px-3" required><?php echo htmlspecialchars($produto['descricao']); ?></textarea>
+                    <label class="block text-gray-700 font-bold mb-2">Descrição Curta (Vitrine)</label>
+                    <input type="text" name="descricao" class="w-full border rounded py-2 px-3" maxlength="100" placeholder="Ex: Saboroso e macio..." required <?php echo htmlspecialchars($produto['descricao']); ?>>
+                </div>
+
+                <div class="mb-4">
+                    <label class="block text-gray-700 font-bold mb-2">Descrição Detalhada (Modal)</label>
+                    <textarea name="descricao_detalhada" rows="4" class="w-full border rounded py-2 px-3" placeholder="Conte todos os detalhes aqui..."> <?php echo htmlspecialchars($produto['descricao']); ?></textarea>
                 </div>
 
                 <div class="mb-4 border-t pt-4">

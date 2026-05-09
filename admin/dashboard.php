@@ -50,8 +50,13 @@ $imagens_carrossel = $stmt_carrossel->fetchAll(PDO::FETCH_ASSOC);
             </div>
             
             <div class="mb-4">
-                <label class="block text-gray-700 text-sm font-bold mb-2">Descrição</label>
-                <textarea name="descricao" rows="3" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700" required></textarea>
+                <label class="block text-gray-700 font-bold mb-2">Descrição Curta (Vitrine)</label>
+                <input type="text" name="descricao" class="w-full border rounded py-2 px-3" maxlength="100" placeholder="Ex: Saboroso e macio..." required>
+            </div>
+
+            <div class="mb-4">
+                <label class="block text-gray-700 font-bold mb-2">Descrição Detalhada (Modal)</label>
+                <textarea name="descricao_detalhada" rows="4" class="w-full border rounded py-2 px-3" placeholder="Conte todos os ingredientes e detalhes aqui..."></textarea>
             </div>
             
             <div class="mb-4">
