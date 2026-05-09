@@ -1,0 +1,41 @@
+
+/* Opcional: Se quiser que o botão também se ajuste ao tema escuro */
+.hero-com-imagem .btn-primary {
+    background: linear-gradient(135deg, #bb0bf5 0%, #9606d9 100%); /* Mantém a cor original ou ajusta */
+    color: white; /* Garante que o texto do botão seja branco */
+}
+.fundo-produtos-personalizado {
+    background-color: #e1b7f5aa; /* Exemplo: uma cor "creme antigo" */
+}
+
+/* assets/css/style.css */
+
+/* Define uma altura fixa para o container do carrossel */
+.meu-carrossel {
+    height: 400px; /* Ajuste esta altura como preferir */
+}
+
+/* Garante que os slides (e o que tem dentro) preencham a altura */
+.swiper-slide {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #eee; /* Cor de fundo enquanto a imagem carrega */
+}
+
+/* Personaliza as setas para combinar com a cor do seu site */
+.swiper-button-next,
+.swiper-button-prev {
+    color: #f59e0b !important; /* Cor âmbar do seu tema */
+}
+
+/* Personaliza as bolinhas da paginação */
+.swiper-pagination-bullet-active {
+    background-color: #f59e0b !important;
+}
+.rodape {
+    background-color: #9606d9 ; /* Exemplo: uma cor "creme antigo" */
+}
+.fundo-contato {
+    background-color: #f7d9ac ; /* Exemplo: uma cor "creme antigo" */
+}

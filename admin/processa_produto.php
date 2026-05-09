@@ -22,12 +22,16 @@ if ($acao == 'adicionar') {
     }
 
     // 2. INSERE O PRODUTO NA TABELA 'produtos'
-    $sql = "INSERT INTO produtos (nome, preco, descricao, imagem, ativo) VALUES (:nome, :preco, :descricao, :imagem, 1)";
+    $descricao = $_POST['descricao'];
+    $descricao_detalhada = $_POST['descricao_detalhada'];
+
+    $sql = "INSERT INTO produtos (nome, preco, descricao, descricao_detalhada, imagem, ativo) VALUES (:nome, :preco, :descricao, :descricao_detalhada, :imagem, 1)";
     $stmt = $pdo->prepare($sql);
     $stmt->execute([
         ':nome' => $nome,
         ':preco' => $preco,
         ':descricao' => $descricao,
+        ':descricao_detalhada' => $descricao_detalhada,
         ':imagem' => $nome_foto_capa
     ]);
 
@@ -64,12 +68,16 @@ elseif ($acao == 'editar') {
     $descricao = $_POST['descricao'];
 
     // 1. ATUALIZA OS DADOS DE TEXTO
-    $sql = "UPDATE produtos SET nome = :nome, preco = :preco, descricao = :descricao WHERE id = :id";
+    $descricao = $_POST['descricao'];
+    $descricao_detalhada = $_POST['descricao_detalhada'];
+
+    $sql = "UPDATE produtos SET nome = :nome, preco = :preco, descricao = :descricao, descricao_detalhada = :descricao_detalhada WHERE id = :id";
     $stmt = $pdo->prepare($sql);
     $stmt->execute([
         ':nome' => $nome,
         ':preco' => $preco,
         ':descricao' => $descricao,
+        ':descricao_detalhada' => $descricao_detalhada,
         ':id' => $id
     ]);
 
