@@ -23,7 +23,34 @@ $imagens_carrossel = $stmt_carrossel->fetchAll(PDO::FETCH_ASSOC);
 <html>
 <head>
     <title>Dashboard - Confeitaria</title>
+    <!-- 1. Cria as variáveis dinâmicas lendo do banco de dados -->
+    <style>
+        :root {
+            --cor-fundo: <?php echo $config['cor_fundo'] ?? '#fffbeb'; ?>;
+            --cor-primaria: <?php echo $config['cor_primaria'] ?? '#f59e0b'; ?>;
+            --cor-titulo: <?php echo $config['cor_titulo'] ?? '#6b21a8'; ?>;
+            --cor-texto: <?php echo $config['cor_texto'] ?? '#4b5563'; ?>;
+        }
+    </style>
+
+    <!-- 2. Importa o Tailwind -->
     <script src="https://cdn.tailwindcss.com"></script>
+
+    <!-- 3. Ensina o Tailwind a usar as suas variáveis -->
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'tema-fundo': 'var(--cor-fundo)',
+                        'tema-primaria': 'var(--cor-primaria)',
+                        'tema-titulo': 'var(--cor-titulo)',
+                        'tema-texto': 'var(--cor-texto)',
+                    }
+                }
+            }
+        }
+    </script>
 </head>
 <body class="bg-gray-100 p-8">
     <div class="container mx-auto">
@@ -41,7 +68,7 @@ $imagens_carrossel = $stmt_carrossel->fetchAll(PDO::FETCH_ASSOC);
             <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
                 <div>
                     <label class="block text-gray-700 text-sm font-bold mb-2">Nome do Produto</label>
-                    <input type="text" name="nome" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700" required>
+                    <input type="text" name="nome" class="shadow appearance-none border rounded w-full py-2 px-3 text-tema-titulo" required>
                 </div>
                 <div>
                     <label class="block text-gray-700 text-sm font-bold mb-2">Preço (ex: 25.50)</label>
@@ -109,7 +136,7 @@ $imagens_carrossel = $stmt_carrossel->fetchAll(PDO::FETCH_ASSOC);
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
                     <div>
                         <label class="block text-gray-700 text-sm font-bold mb-2">Título Principal (Hero)</label>
-                        <input type="text" name="hero_titulo" value="<?php echo htmlspecialchars($config['hero_titulo']); ?>" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700" required>
+                        <input type="text" name="hero_titulo" value="<?php echo htmlspecialchars($config['hero_titulo']); ?>" class="shadow appearance-none border rounded w-full py-2 px-3 text-tema-titulo" required>
                     </div>
                     <div>
                         <label class="block text-gray-700 text-sm font-bold mb-2">Subtítulo (Hero)</label>
@@ -132,10 +159,31 @@ $imagens_carrossel = $stmt_carrossel->fetchAll(PDO::FETCH_ASSOC);
                     </div>
                 </div>
 
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
+                    <div>
+                        <label class="block text-gray-700 text-sm font-bold mb-2">Cor dos Títulos (Letras Maiores)</label>
+                        <input type="color" name="cor_titulo" value="<?php echo @$config['cor_titulo'] ?: '#6b21a8'; ?>" class="w-full h-10 border rounded cursor-pointer">
+                    </div>
+                    <div>
+                        <label class="block text-gray-700 text-sm font-bold mb-2">Cor dos Textos (Descrições)</label>
+                        <input type="color" name="cor_texto" value="<?php echo @$config['cor_texto'] ?: '#4b5563'; ?>" class="w-full h-10 border rounded cursor-pointer">
+                    </div>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
+                    <div>
+                        <label class="block text-gray-700 text-sm font-bold mb-2">Cor Primária (Botões e Destaques)</label>
+                        <input type="color" name="cor_primaria" value="<?php echo @$config['cor_primaria'] ?: '#f59e0b'; ?>" class="w-full h-10 border rounded cursor-pointer">
+                    </div>
+                </div>
+
                 <div class="mb-4">
                     <label class="block text-gray-700 text-sm font-bold mb-2">Imagem de Fundo (Deixe em branco para manter a atual)</label>
                     <input type="file" name="hero_imagem" accept="image/*" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700">
                     <p class="text-sm text-gray-500 mt-1">Imagem atual: <?php echo $config['hero_imagem']; ?></p>
+                </div>
+
+                <div class="mb-4">
+                    <label class="block text-gray-700 text-sm font-bold mb-2">Número do WhatsApp (Apenas números, com DDI e DDD. Ex: 5543998253698)</label>
+                    <input type="text" name="whatsapp" value="<?php echo htmlspecialchars($config['whatsapp'] ?? ''); ?>" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700" required>
                 </div>
                 
                 <button type="submit" class="bg-purple-600 hover:bg-purple-800 text-white font-bold py-2 px-4 rounded">

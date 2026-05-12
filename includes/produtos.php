@@ -22,7 +22,7 @@ $json_fotos_extras = json_encode($fotos_por_produto);
 
 <section id="produtos" class="fundo-produtos-personalizado py-16">
    <div class="container mx-auto px-2 max-w-4xl"> 
-      <h2 class="text-4xl font-bold text-center text-purple-800 mb-12">Nossos Produtos</h2>
+      <h2 class="text-4xl font-bold text-center text-tema-titulo mb-12">Nossos Produtos</h2>
       <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
 
          <?php foreach ($produtos as $index => $produto): ?>
@@ -46,8 +46,8 @@ $json_fotos_extras = json_encode($fotos_por_produto);
                 </div>
 
                 <div class="p-6">
-                    <h3 class="text-xl font-bold text-gray-800 mb-2"><?php echo htmlspecialchars($produto['nome']); ?></h3>
-                    <p class="text-gray-600 mb-4"><?php echo htmlspecialchars($produto['descricao']); ?></p>
+                    <h3 class="text-xl font-bold text-tema-titulo mb-2"><?php echo htmlspecialchars($produto['nome']); ?></h3>
+                    <p class="text-tema-texto mb-4"><?php echo htmlspecialchars($produto['descricao']); ?></p>
                     
                     <div class="flex items-center justify-between">
                         <span class="text-2xl font-bold text-amber-600">
@@ -56,15 +56,16 @@ $json_fotos_extras = json_encode($fotos_por_produto);
 
                         <div class="flex items-center">
                             <button onclick="decrementQuantity(<?php echo $index; ?>)" 
-                                    class="bg-amber-200 text-amber-800 hover:bg-amber-300 w-8 h-8 rounded-l-lg font-bold transition-colors">
+                                    class="bg-tema-primaria text-white hover:brightness-90 w-8 h-8 rounded-l-lg font-bold transition-all">
                                 -
                             </button>
                             <input id="quantity-<?php echo $index; ?>" type="number" value="1" min="1" 
                                    class="w-10 h-8 text-center border-y border-amber-300 font-semibold text-gray-700">
                             <button onclick="incrementQuantity(<?php echo $index; ?>)" 
-                                    class="bg-amber-200 text-amber-800 hover:bg-amber-300 w-8 h-8 rounded-r-lg font-bold transition-colors">
+                                class="bg-tema-primaria text-white hover:brightness-90 w-8 h-8 rounded-r-lg font-bold transition-all">
                                 +
                             </button>
+                            
                         </div>
                     </div>
 

@@ -1,6 +1,6 @@
 <section id="galeria" class="py-16 bg-amber-50">
     <div class="container mx-auto px-4">
-        <h2 class="text-4xl font-bold text-center text-purple-800 mb-12">Nossa galeria de delícias</h2>
+        <h2 class="text-4xl font-bold text-center text-tema-titulo mb-12">Nossa galeria</h2>
             
             <div class="swiper meu-carrossel">
                 <div class="swiper-wrapper">
