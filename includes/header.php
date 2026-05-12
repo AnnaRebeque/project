@@ -7,6 +7,23 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
 
     <script src="https://cdn.tailwindcss.com"></script>
+
+    <script>
+        const numeroWhatsAppAdmin = "<?php echo $config['whatsapp'] ?? '5543998253698'; ?>";
+
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'tema-fundo': 'var(--cor-fundo)',
+                        'tema-primaria': 'var(--cor-primaria)',
+                        'tema-titulo': 'var(--cor-titulo)',
+                        'tema-texto': 'var(--cor-texto)',
+                    }
+                }
+            }
+        }
+    </script>
     
     <link rel="stylesheet" href="assets/css/style.css"> 
     <style>
@@ -28,12 +45,14 @@
         }
         
         .btn-primary {
-            background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%);
+            background-color: var(--cor-primaria); /* Usa a cor do seu banco de dados */
             transition: all 0.3s ease;
         }
         
         .btn-primary:hover {
-            background: linear-gradient(135deg, #d97706 0%, #b45309 100%);
+            /* O filter: brightness(0.9) escurece a cor atual em 10%, 
+               funciona perfeitamente seja a cor roxa, azul, verde... */
+            filter: brightness(0.9); 
             transform: translateY(-1px);
         }
         
@@ -67,12 +86,12 @@
             font-weight: bold;
         }
         .hero-com-imagem {
-        background-image: linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)), url('assets/images/<?php echo $config['hero_imagem']; ?>');
-        background-size: cover;
-        background-position: center;
-        background-repeat: no-repeat;
-        color: white;
-        text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.7);
+            background-image: linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)), url('assets/images/<?php echo $config['hero_imagem']; ?>');
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            color: white;
+            text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.7);
         }
     
         .fundo-produtos-personalizado {
@@ -85,6 +104,14 @@
         
         .rodape {
             background-color: <?php echo $config['cor_rodape']; ?> !important;
+        }
+
+        :root {
+            /* O @ serve para não dar erro se a cor não estiver definida no banco */
+            --cor-fundo: <?php echo @$config['cor_fundo'] ?: '#fffbeb'; ?>;
+            --cor-primaria: <?php echo @$config['cor_primaria'] ?: '#f59e0b'; ?>;
+            --cor-titulo: <?php echo @$config['cor_titulo'] ?: '#6b21a8'; ?>;
+            --cor-texto: <?php echo @$config['cor_texto'] ?: '#4b5563'; ?>;
         }
     </style>
 </head>
@@ -106,7 +133,7 @@
                     <a href="#contato" class="text-gray-700 hover:text-amber-600 transition-colors">Contato</a>
                 </nav>
                 
-                <button onclick="toggleCart()" class="bg-amber-500 text-white px-4 py-2 rounded-lg hover:bg-amber-600 transition-colors">
+                <button onclick="toggleCart()" class="bg-tema-primaria text-white px-4 py-2 rounded-lg hover:brightness-90 transition-all">
                     🛒 Carrinho (<span id="cart-count">0</span>)
                 </button>
             </div>

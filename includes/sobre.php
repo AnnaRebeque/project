@@ -2,14 +2,14 @@
     <section id="sobre" class="py-16 bg-amber-50">
         <div class="container mx-auto px-4">
             <div class="max-w-4xl mx-auto text-center">
-                <h2 class="text-4xl font-bold text-purple-800 mb-8">Nossa História</h2>
-                <p class="text-lg text-gray-700 mb-6">
-                    A Cake Up nasceu de um sonho, a partir do amor de uma garota pela confeitaria. 
-                    Prezamos pela qualidade de nossos produtos, garantindo assim experiências incríveis desde nossas embalagens até os sabores de nossos doces e salgados.
-
+                <h2 class="text-4xl font-bold text-tema-titulo mb-8">Como funcionamos?</h2>
+                <p class="text-lg text-tema-texto mb-6">
+                    Localizada em Londrina, trabalhamos a partir de encomendas solicitadas previamente.
+                    Não realizamos entregas.
                 </p>
-                <p class="text-lg text-gray-700">
-                    Utilizamos apenas ingredientes selecionados e um cuidado especial para garantir que cada doce seja uma experiência inesquecível.
+                <p class="text-lg text-tema-texto"> 
+                    Adicione os produtos ao carrinho e finalizando sua compra você será redirecionado ao nosso WhatsApp para fechar o pedido!
+                    Atendimento personalizado e rápido, você não vai precisar esperar tanto pela resposta ao seu pedido!
                 </p>
             </div>
         </div>

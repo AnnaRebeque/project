@@ -2,22 +2,23 @@
     <div class="container mx-auto px-4 text-center">
         <div class="flex items-center justify-center space-x-2 mb-4">
             <div class="text-3xl">🧁</div>
-            <h3 class="text-2xl font-bold text-white-600">Cake Up Doces</h3>
+            <h3 class="text-tema-titulo font-bold text-white-600">Cake Up Doces</h3>
         </div>
-        <p class="text-white-600 mb-4">Criando momentos doces</p>
+        <p class="text-tema-texto mb-4">Criando momentos doces</p>
         <div class="flex justify-center items-center space-x-6">
             <img src="assets/images/insta.jpg" alt="Logo insta" class="h-5 w-auto">
-            <a href="https://www.instagram.com/cakeupdoces/" class="text-white-600 hover:text-white transition-colors">Instagram</a>
+            <a href="https://www.instagram.com/cakeupdoces/" target="_blank" class="text-white-600 hover:text-white transition-colors">Instagram</a>
+            
             <img src="assets/images/whats.jpg" alt="Logo whats" class="h-5 w-auto">
-            <a href="https://wa.me/5543998253698" class="text-white-600 hover:text-white transition-colors">WhatsApp</a>
-            <a href="admin/index.php" class="bg-purple-500 text-white py-2 px-2 rounded">Área restrita</a>
+            <a href="https://wa.me/<?php echo $config['whatsapp'] ?? '5543998253698'; ?>" target="_blank" class="text-white-600 hover:text-white transition-colors">WhatsApp</a>
+            
+            <a href="admin/index.php" class="bg-tema-primaria hover:brightness-90 transition-all text-white py-2 px-2 rounded">Área restrita</a>
         </div>
     </div>
 </footer>
 
 <div class="floating-cart">
-    <button onclick="toggleCart()" class="bg-amber-500 text-white p-4 rounded-full shadow-lg hover:bg-amber-600 transition-colors relative">
-        🛒
+    <button onclick="toggleCart()" class="bg-tema-primaria text-white p-4 rounded-full shadow-lg hover:brightness-90 transition-all relative">        🛒
         <span id="floating-cart-count" class="cart-badge">0</span>
     </button>
 </div>
@@ -66,10 +67,10 @@
         
         <div class="w-full md:w-1/2 p-8 flex flex-col overflow-y-auto">
              <div>
-                 <h3 id="modal-nome" class="text-3xl font-bold text-purple-800 mb-4">Nome do Produto</h3>
+                 <h3 id="modal-nome" class="text-3xl font-bold text-tema-titulo mb-4">Nome do Produto</h3>
                  <p id="modal-preco" class="text-3xl font-bold text-amber-600 mb-6">R$ 0,00</p>
                  
-                 <h4 class="font-bold text-gray-800 mb-2">Sobre este produto:</h4>
+                 <h4 class="font-bold text-tema-texto mb-2">Sobre este produto:</h4>
                  <p id="modal-descricao" class="text-gray-600 leading-relaxed">Descrição vai aqui...</p>
              </div>
         </div>
@@ -201,13 +202,32 @@
         ).join('\n');
 
         const message = `Olá, Cake UP! Gostaria de fazer o seguinte pedido:\n\n${orderSummary}\n\nTotal: R$ ${cartTotal.toFixed(2).replace('.', ',')}\n\nObrigado!`;
-        const whatsappUrl = `https://wa.me/5543998253698?text=${encodeURIComponent(message)}`;
-
+        const whatsappUrl = `https://wa.me/${numeroWhatsAppAdmin}?text=${encodeURIComponent(message)}`;
         window.open(whatsappUrl, '_blank');
 
         cart = [];
         updateCartDisplay();
         toggleCart();
+    }
+
+    function enviarContato(event) {
+        event.preventDefault(); // Impede a página de recarregar
+        
+        // Pega os valores digitados (ajuste os IDs para os que você usou no seu HTML)
+        const nome = document.getElementById('nome_contato').value;
+        const mensagem = document.getElementById('mensagem_contato').value;
+        
+        // Monta o texto bonitinho
+        const texto = `Olá! Meu nome é ${nome}.\n\nVim pelo site e gostaria de saber: ${mensagem}`;
+        
+        // Cria o link do WhatsApp com o número do painel admin
+        const whatsappUrl = `https://wa.me/${numeroWhatsAppAdmin}?text=${encodeURIComponent(texto)}`;
+        
+        // Abre o WhatsApp
+        window.open(whatsappUrl, '_blank');
+        
+        // Limpa o formulário depois de enviar
+        event.target.reset();
     }
 
     function scrollToProducts() {

@@ -9,6 +9,11 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $cor_produtos = $_POST['cor_produtos'];
     $cor_contato = $_POST['cor_contato'];
     $cor_rodape = $_POST['cor_rodape'];
+    $cor_titulo = $_POST['cor_titulo'];
+    $cor_texto = $_POST['cor_texto'];
+    $cor_primaria = $_POST['cor_primaria'];
+    $whatsapp = $_POST['whatsapp'];
+
 
     // Lógica para upload de nova imagem (caso enviada)
     $nova_imagem_nome = null;
@@ -26,39 +31,49 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     }
 
     // Prepara a query de atualização
+    // Prepara a query de atualização
     if ($nova_imagem_nome) {
-        // Se enviou imagem, atualiza o campo de imagem também
         $sql = "UPDATE configuracoes SET 
                 hero_titulo = :titulo, 
                 hero_subtitulo = :subtitulo, 
                 hero_imagem = :imagem, 
                 cor_produtos = :cor_produtos, 
                 cor_contato = :cor_contato, 
-                cor_rodape = :cor_rodape 
+                cor_rodape = :cor_rodape,
+                cor_titulo = :cor_titulo, 
+                cor_texto = :cor_texto,
+                cor_primaria = :cor_primaria,
+                whatsapp = :whatsapp
                 WHERE id = 1";
         
         $stmt = $pdo->prepare($sql);
         $stmt->bindValue(':imagem', $nova_imagem_nome);
     } else {
-        // Se não enviou imagem, atualiza apenas os textos e cores
         $sql = "UPDATE configuracoes SET 
                 hero_titulo = :titulo, 
                 hero_subtitulo = :subtitulo, 
                 cor_produtos = :cor_produtos, 
                 cor_contato = :cor_contato, 
-                cor_rodape = :cor_rodape 
+                cor_rodape = :cor_rodape,
+                cor_titulo = :cor_titulo, 
+                cor_texto = :cor_texto,
+                cor_primaria = :cor_primaria,
+                whatsapp = whatsapp
                 WHERE id = 1";
                 
         $stmt = $pdo->prepare($sql);
     }
 
-    // Executa a atualização
     $stmt->bindValue(':titulo', $hero_titulo);
     $stmt->bindValue(':subtitulo', $hero_subtitulo);
     $stmt->bindValue(':cor_produtos', $cor_produtos);
     $stmt->bindValue(':cor_contato', $cor_contato);
     $stmt->bindValue(':cor_rodape', $cor_rodape);
-    
+    $stmt->bindValue(':cor_titulo', $cor_titulo); 
+    $stmt->bindValue(':cor_texto', $cor_texto);   
+    $stmt->bindValue(':cor_primaria', $cor_primaria);
+    $stmt->bindValue(':whatsapp', $whatsapp); 
+
     $stmt->execute();
 
     // Redireciona de volta ao painel
